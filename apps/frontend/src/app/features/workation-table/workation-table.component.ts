@@ -1,4 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WorkationService } from '../../core/services/workation.service';
 import { SortColumn, SortDirection, Workation } from '../../core/models/workation.model';
 import { sortWorkations } from '../../core/utils/sort-workations';
@@ -39,16 +40,19 @@ export class WorkationTableComponent {
   ];
 
   constructor() {
-    this.workationService.findAll().subscribe({
-      next: (workations) => {
-        this.workations.set(workations);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.error.set('Unable to load workations.');
-        this.loading.set(false);
-      }
-    });
+    this.workationService
+      .findAll()
+      .pipe(takeUntilDestroyed())
+      .subscribe({
+        next: (workations) => {
+          this.workations.set(workations);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.error.set('Unable to load workations.');
+          this.loading.set(false);
+        }
+      });
   }
 
   protected sortBy(column: SortColumn): void {
@@ -60,7 +64,7 @@ export class WorkationTableComponent {
     this.sortDirection.set('asc');
   }
 
-  protected flag(country: string): string {
+  protected flag(country: string): string | null {
     return flagUrl(country);
   }
 

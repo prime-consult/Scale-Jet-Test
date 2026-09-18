@@ -8,9 +8,15 @@ const COUNTRY_ISO: Record<string, string> = {
   India: 'in'
 };
 
-export function flagUrl(country: string): string {
-  const iso = COUNTRY_ISO[country] ?? country.slice(0, 2).toLowerCase();
-  return `/flags/${iso}.png`;
+const RISK_RANK: Record<string, number> = {
+  NO: 0,
+  LOW: 1,
+  HIGH: 2
+};
+
+export function flagUrl(country: string): string | null {
+  const iso = COUNTRY_ISO[country];
+  return iso ? `/flags/${iso}.png` : null;
 }
 
 export function formatIsoDate(isoDate: string): string {
@@ -33,4 +39,8 @@ export function riskModifier(risk: string): 'high' | 'low' | 'none' {
     return 'low';
   }
   return 'none';
+}
+
+export function riskRank(risk: string): number {
+  return RISK_RANK[risk] ?? Number.MAX_SAFE_INTEGER;
 }

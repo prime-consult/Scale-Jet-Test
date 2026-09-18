@@ -32,13 +32,17 @@
             <td class="col-employee">{{ row.employee }}</td>
             <td class="col-origin">
               <span class="country">
-                <img [src]="flag(row.origin)" [alt]="row.origin + ' flag'" width="22" height="16" />
+                @if (flag(row.origin); as flagSrc) {
+                  <img [src]="flagSrc" [alt]="row.origin + ' flag'" width="22" height="16" />
+                }
                 <span>{{ row.origin }}</span>
               </span>
             </td>
             <td class="col-destination">
               <span class="country">
-                <img [src]="flag(row.destination)" [alt]="row.destination + ' flag'" width="22" height="16" />
+                @if (flag(row.destination); as flagSrc) {
+                  <img [src]="flagSrc" [alt]="row.destination + ' flag'" width="22" height="16" />
+                }
                 <span>{{ row.destination }}</span>
               </span>
             </td>

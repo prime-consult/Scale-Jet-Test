@@ -8,9 +8,10 @@ This repository is a **monorepo**: both apps live under `apps/` and are orchestr
 workflex/
   apps/
     backend/     Spring Boot API  (@workflex/backend)
+      src/main/resources/data/workations.csv
     frontend/    Angular UI       (@workflex/frontend)
   scripts/       shared run helpers
-  workations.csv
+  screenshot.png
 ```
 
 ![Workations table](screenshot.png)
@@ -18,7 +19,7 @@ workflex/
 ## Features
 
 - `GET /workflex/workation` returns every workation stored in H2
-- On startup the backend imports `workations.csv` into the database
+- On startup the backend imports `apps/backend/src/main/resources/data/workations.csv` into the database
 - Angular table is sortable by every column
 - Dates are shown as `dd/MM/yyyy`
 - `LOW` (`LOW_RISK`) and `NO` (`NO_RISK`) both display as **No risk**, with orange and green icons
@@ -40,7 +41,7 @@ CSV import  -->  WorkationDataInitializer
 
 ## Prerequisites
 
-- Java 25
+- Java 21+ (the project compiles to Java 21; JDK 25 works)
 - Node.js 20+
 
 Maven is not required globally; the backend includes the Maven Wrapper (`mvnw`).

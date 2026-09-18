@@ -23,4 +23,8 @@ describe('workation utils', () => {
     expect(flagUrl('United States')).toBe('/flags/us.png');
     expect(flagUrl('Ukraine')).toBe('/flags/ua.png');
   });
+
+  it('does not invent a flag path for unknown countries', () => {
+    expect(flagUrl('Narnia')).toBeNull();
+  });
 });

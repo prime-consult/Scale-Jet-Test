@@ -1,4 +1,5 @@
 import { SortColumn, SortDirection, Workation } from '../models/workation.model';
+import { riskRank } from './workation.utils';
 
 export function sortWorkations(
   workations: Workation[],
@@ -12,6 +13,9 @@ export function sortWorkations(
 function compare(left: Workation, right: Workation, column: SortColumn): number {
   if (column === 'workingDays') {
     return left.workingDays - right.workingDays;
+  }
+  if (column === 'risk') {
+    return riskRank(left.risk) - riskRank(right.risk);
   }
   if (column === 'start' || column === 'end') {
     return left[column].localeCompare(right[column]);

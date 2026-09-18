@@ -57,4 +57,22 @@ describe('sortWorkations', () => {
       '2024-01-02'
     ]);
   });
+
+  it('sorts risk by severity, not alphabetically', () => {
+    const mixed: Workation[] = [
+      { ...rows[0], risk: 'HIGH' },
+      { ...rows[1], risk: 'NO', workationId: 'w-no' },
+      { ...rows[2], risk: 'LOW', workationId: 'w-low' }
+    ];
+    expect(sortWorkations(mixed, 'risk', 'asc').map((row) => row.risk)).toEqual([
+      'NO',
+      'LOW',
+      'HIGH'
+    ]);
+    expect(sortWorkations(mixed, 'risk', 'desc').map((row) => row.risk)).toEqual([
+      'HIGH',
+      'LOW',
+      'NO'
+    ]);
+  });
 });

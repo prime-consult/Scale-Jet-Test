@@ -54,14 +54,28 @@ public class Workation {
             int workingDays,
             Risk risk
     ) {
-        this.id = Objects.requireNonNull(id, "id");
-        this.employee = Objects.requireNonNull(employee, "employee");
-        this.origin = Objects.requireNonNull(origin, "origin");
-        this.destination = Objects.requireNonNull(destination, "destination");
+        this.id = requireText(id, "id");
+        this.employee = requireText(employee, "employee");
+        this.origin = requireText(origin, "origin");
+        this.destination = requireText(destination, "destination");
         this.startDate = Objects.requireNonNull(startDate, "startDate");
         this.endDate = Objects.requireNonNull(endDate, "endDate");
+        if (endDate.isBefore(startDate)) {
+            throw new IllegalArgumentException("endDate must not be before startDate");
+        }
+        if (workingDays < 0) {
+            throw new IllegalArgumentException("workingDays must not be negative");
+        }
         this.workingDays = workingDays;
         this.risk = Objects.requireNonNull(risk, "risk");
+    }
+
+    private static String requireText(String value, String field) {
+        Objects.requireNonNull(value, field);
+        if (value.isBlank()) {
+            throw new IllegalArgumentException(field + " must not be blank");
+        }
+        return value;
     }
 
     public String getId() {

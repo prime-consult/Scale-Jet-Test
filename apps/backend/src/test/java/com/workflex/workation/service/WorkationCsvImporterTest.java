@@ -51,4 +51,16 @@ class WorkationCsvImporterTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("workingDays");
     }
+
+    @Test
+    void rejectsInvertedDateRange() {
+        String csv = """
+                workationId,employee,origin,destination,start,end,workingDays,risk
+                w1,Steffen Jacobs,Germany,Spain,2024-03-02,2024-03-01,1,HIGH
+                """;
+
+        assertThatThrownBy(() -> importer.parse(new StringReader(csv)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("endDate");
+    }
 }
