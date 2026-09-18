@@ -1,0 +1,9 @@
+node_modules/
+apps/backend/target/
+apps/frontend/dist/
+apps/frontend/.angular/
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+*.iml

@@ -1,0 +1,20 @@
+{
+  "name": "workflex",
+  "private": true,
+  "description": "WorkFlex workation platform monorepo",
+  "workspaces": [
+    "apps/backend",
+    "apps/frontend"
+  ],
+  "scripts": {
+    "start": "concurrently -n api,web -c cyan,magenta \"npm run start:api\" \"npm run start:web\"",
+    "start:api": "npm run start -w @workflex/backend",
+    "start:web": "npm run start -w @workflex/frontend",
+    "test": "npm run test:api && npm run test:web",
+    "test:api": "npm run test -w @workflex/backend",
+    "test:web": "npm run test -w @workflex/frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

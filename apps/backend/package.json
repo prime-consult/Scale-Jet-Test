@@ -1,0 +1,8 @@
+{
+  "name": "@workflex/backend",
+  "private": true,
+  "scripts": {
+    "start": "node ../../scripts/mvnw.js spring-boot:run",
+    "test": "node ../../scripts/mvnw.js test"
+  }
+}

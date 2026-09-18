@@ -1,0 +1,59 @@
+<div class="table-shell">
+  @if (loading()) {
+    <p class="status">Loading workations…</p>
+  } @else if (error()) {
+    <p class="status status-error">{{ error() }}</p>
+  } @else {
+    <table class="workation-table">
+      <thead>
+        <tr>
+          @for (column of columns; track column.key) {
+            <th [class]="'col-' + column.key">
+              <button type="button" (click)="sortBy(column.key)">
+                <span>{{ column.label }}</span>
+                <span class="sort" aria-hidden="true">
+                  <span
+                    class="chevron chevron-up"
+                    [class.active]="sortColumn() === column.key && sortDirection() === 'asc'"
+                  ></span>
+                  <span
+                    class="chevron chevron-down"
+                    [class.active]="sortColumn() === column.key && sortDirection() === 'desc'"
+                  ></span>
+                </span>
+              </button>
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows(); track row.workationId) {
+          <tr>
+            <td class="col-employee">{{ row.employee }}</td>
+            <td class="col-origin">
+              <span class="country">
+                <img [src]="flag(row.origin)" [alt]="row.origin + ' flag'" width="22" height="16" />
+                <span>{{ row.origin }}</span>
+              </span>
+            </td>
+            <td class="col-destination">
+              <span class="country">
+                <img [src]="flag(row.destination)" [alt]="row.destination + ' flag'" width="22" height="16" />
+                <span>{{ row.destination }}</span>
+              </span>
+            </td>
+            <td class="col-start">{{ date(row.start) }}</td>
+            <td class="col-end">{{ date(row.end) }}</td>
+            <td class="col-workingDays">{{ row.workingDays }}</td>
+            <td class="col-risk">
+              <span class="risk" [class]="'risk-' + modifier(row.risk)">
+                <img [src]="icon(row.risk)" alt="" width="20" height="20" />
+                <span>{{ label(row.risk) }}</span>
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
